@@ -1,0 +1,14 @@
+[package]
+name = "simtime"
+version = "0.1.0"
+authors = ["DanGSun <DanGSun@yandex.ru>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nalgebra = "0.18"
+ncollide3d = "0.20"
+nphysics3d = "0.12"
+three = "0.4.0"
+rand = "0.7.2"
