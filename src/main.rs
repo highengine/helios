@@ -42,7 +42,11 @@ fn main() {
         force_generators: DefaultForceGeneratorSet::new(),
     };
 
-    let mut win = three::Window::new("@solmann's SimEngine");
+    world
+        .geometrical_world
+        .maintain(&mut world.bodies, &mut world.colliders);
+
+    let mut win = three::Window::new("Helios Engine");
     let cam = win.factory.perspective_camera(45.0, 1.0..150.0);
 
     /*
