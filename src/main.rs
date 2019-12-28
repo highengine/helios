@@ -5,13 +5,14 @@ use three::Object;
 
 extern crate nalgebra as na;
 
-use na::{Point3, RealField, Vector3};
-use ncollide3d::shape::{ConvexHull, Cuboid, ShapeHandle};
+use na::{Point, Point3, RealField, Vector3};
+use ncollide3d::shape::{ConvexHull, Cuboid, Shape, ShapeHandle};
+use ncollide3d::transformation::{ToTriMesh};
 use nphysics3d::force_generator::DefaultForceGeneratorSet;
 use nphysics3d::joint::DefaultJointConstraintSet;
 use nphysics3d::object::{
-    BodyPartHandle, BodySet, ColliderDesc, ColliderHandle, DefaultBodySet, DefaultColliderSet,
-    Ground, RigidBodyDesc,
+    BodyPartHandle, BodySet, ColliderDesc, ColliderHandle, DefaultBodySet, DefaultColliderHandle,
+    DefaultColliderSet, Ground, RigidBodyDesc,
 };
 use nphysics3d::world::{DefaultGeometricalWorld, DefaultMechanicalWorld};
 
@@ -41,6 +42,7 @@ fn init_world(world: &mut SimulatorWorld) {
     let co = ColliderDesc::new(ground_shape)
         .translation(Vector3::y() * -ground_thickness)
         .build(BodyPartHandle(ground_handle, 0));
+
     world.colliders.insert(co);
 
     /*
@@ -144,7 +146,7 @@ fn main() {
             println!("Fullscreen status: {}", is_fullscreen);
             win.set_fullscreen(is_fullscreen)
         }
-
+        true.to_string().len();
         world.mechanical_world.step(
             &mut world.geometrical_world,
             &mut world.bodies,
@@ -154,12 +156,19 @@ fn main() {
         );
 
         physics_tick(&mut world);
+
+        for collider_o in world.colliders.iter() {
+            let cs = collider_o.1.shape();
+            cs.to_tr
+            break;
+            // println!("Collider is in render!");
+        }
+        break;
         win.render(&cam);
     }
     println!("Exiting now.");
-    let mut body_counter: i32 = 0;
-    for i in world.bodies.iter() {
-        body_counter += 1;
-    }
-    println!("Amount of bodies, simulated this time: {}", body_counter)
+    println!(
+        "Amount of bodies simulated this time: {}",
+        world.colliders.iter().count()
+    );
 }
